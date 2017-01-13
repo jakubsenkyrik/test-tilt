@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style type="text/css">
+
+			* {
+				margin: 0;
+				border: none;
+				padding: 0;
+			}
+				
+				
+			#blue, #yellow, #green, #red, #left-green, #left-blue, #left-red, #left-yellow, #right-yellow, #right-red, #right-blue, #right-green {
+				display: none;
+				
+			}
+			
+			#blue.visible, #yellow.visible, #green.visible, #red.visible, #left-green.visible, #left-blue.visible, #left-red.visible, #left-yellow.visible, #right-yellow.visible, #right-red.visible, #right-blue.visible, #right-green.visible {
+				display: block;
+				-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+			    -moz-animation: fadein 1s; /* Firefox < 16 */
+			    -ms-animation: fadein 1s; /* Internet Explorer */
+			    -o-animation: fadein 1s; /* Opera < 12.1 */
+			 	animation: fadein 1s;
+			}
+			
+			@keyframes fadein {
+				from { opacity: 0; }
+				to   { opacity: 1; }
+			}
+			
+			.row {
+				width: 100%;
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.big-box {
+				width: 100%;
+			}
+			
+			.small-box {
+				width: 50%;		
+			}
+		
+			picture, img {
+				width: 100%;
+			}
+			
+			
+			@media (orientation: landscape) {
+			
+
+				.big-box {
+					width: 60%;
+				}
+				
+				.row.navigation {
+					width: 40%;
+				}
+				
+				.small-box {
+					width: 100%;
+
+				}
+				
+			}
+
+		</style>
+	</head>
+	<body>
+	<div class="row">
+		<div class="big-box">
+			<img id="blue" src="trial/blue/BLUE.jpg">
+			<img id="yellow" src="trial/yellow/YELLOW.jpg">
+			<img id="green" src="trial/green/GREEN.jpg">
+			<img id="red" src="trial/red/RED.jpg">
+		</div>
+
+	<div class="row navigation">
+		<div class="small-box left">
+		 
+			<picture id="left-green">
+				<source srcset="trial/blue/landscape/LEFT-GREEN.jpg" media="all and (orientation:landscape)">
+				<source srcset="trial/blue/portrait/LEFT-GREEN.jpg">
+				<img src="trial/blue/portrait/LEFT-GREEN.jpg" alt="A default image">
+			</picture>
+			
+			<picture id="left-blue">
+				<source srcset="trial/yellow/landscape/LEFT-BLUE.jpg" media="all and (orientation:landscape)">
+				<source srcset="trial/yellow/portrait/LEFT-BLUE.jpg">
+				<img src="trial/yellow/portrait/LEFT-BLUE.jpg" alt="A default image">
+			</picture> 
+			
+			<picture id="left-red">
+				<source srcset="trial/green/landscape/LEFT-RED.jpg" media="all and (orientation:landscape)">
+				<source srcset="trial/green/portrait/LEFT-RED.jpg">
+				<img src="trial/green/portrait/LEFT-RED.jpg" alt="A default image">
+			</picture> 
+			
+			<picture id="left-yellow">
+				<source srcset="trial/red/landscape/LEFT-YELLOW.jpg" media="all and (orientation:landscape)">
+				<source srcset="trial/red/portrait/LEFT-YELLOW.jpg">
+				<img src="trial/red/portrait/LEFT-YELLOW.jpg" alt="A default image">
+			</picture>    
+		
+			</div>
+			<div class="small-box right">
+			
+				<picture id="right-yellow">
+				<source srcset="trial/blue/landscape/RIGHT-YELLOW.png" media="all and (orientation:landscape)">
+				<source srcset="trial/blue/portrait/RIGHT-YELLOW.jpg">
+				<img src="trial/blue/portrait/RIGHT-YELLOW.jpg" alt="A default image">
+			</picture>
+			
+			<picture id="right-red">
+				<source srcset="trial/yellow/landscape/RIGHT-RED.png" media="all and (orientation:landscape)">
+				<source srcset="trial/yellow/portrait/RIGHT-RED.jpg">
+				<img src="trial/yellow/portrait/RIGHT-RED.jpg" alt="A default image">
+			</picture>
+			
+				<picture id="right-blue">
+				<source srcset="trial/green/landscape/RIGHT-BLUE.png" media="all and (orientation:landscape)">
+				<source srcset="trial/green/portrait/RIGHT-BLUE.jpg">
+				<img src="trial/green/portrait/RIGHT-BLUE.jpg" alt="A default image">
+			</picture>
+			
+				<picture id="right-green">
+				<source srcset="trial/red/landscape/RIGHT-GREEN.png" media="all and (orientation:landscape)">
+				<source srcset="trial/red/portrait/RIGHT-GREEN.jpg">
+				<img src="trial/red/portrait/RIGHT-GREEN.jpg" alt="A default image">
+			</picture>
+			</div>
+	</div>
+	</div>
+
+
+
+	<script>
+		var currentColour = "blue";
+		var main = document.getElementById("main");
+		var left = document.getElementById("left");
+		var right = document.getElementById("right");
+		var showGamma = document.getElementById("showgamma");
+
+		function deviceOrientationListener(event) {
+			if (currentColour === "blue") {
+				document.getElementById("blue").classList.add("visible");
+				document.getElementById("left-green").classList.add("visible");
+				document.getElementById("right-yellow").classList.add("visible");
+				
+				document.getElementById("yellow").classList.remove("visible");
+				document.getElementById("left-blue").classList.remove("visible");
+				document.getElementById("right-red").classList.remove("visible");
+				
+				document.getElementById("green").classList.remove("visible");
+				document.getElementById("left-red").classList.remove("visible");
+				document.getElementById("right-blue").classList.remove("visible");
+				
+				document.getElementById("red").classList.remove("visible");
+				document.getElementById("left-yellow").classList.remove("visible");
+				document.getElementById("right-green").classList.remove("visible");
+
+				// Left
+				if (event.gamma < -22.5 && event.gamma > -67.5) {
+					currentColour = "green";
+				}
+				// Right
+				if (event.gamma > 22.5 && event.gamma < 67.5) {
+					currentColour = "yellow";
+				}
+			}
+
+			if (currentColour === "yellow") {
+				document.getElementById("blue").classList.remove("visible");
+				document.getElementById("left-green").classList.remove("visible");
+				document.getElementById("right-yellow").classList.remove("visible");
+				
+				document.getElementById("yellow").classList.add("visible");
+				document.getElementById("left-blue").classList.add("visible");
+				document.getElementById("right-red").classList.add("visible");
+				
+				document.getElementById("green").classList.remove("visible");
+				document.getElementById("left-red").classList.remove("visible");
+				document.getElementById("right-blue").classList.remove("visible");
+				
+				document.getElementById("red").classList.remove("visible");
+				document.getElementById("left-yellow").classList.remove("visible");
+				document.getElementById("right-green").classList.remove("visible");
+				// Left
+				if (event.gamma < 22.5 && event.gamma > -22.5) {
+					currentColour = "blue";
+				}
+				// Right
+				if (event.gamma > 67.5) {
+					currentColour = "red";
+				}
+			}
+
+			if (currentColour === "green") {
+				document.getElementById("blue").classList.remove("visible");
+				document.getElementById("left-green").classList.remove("visible");
+				document.getElementById("right-yellow").classList.remove("visible");
+				
+				document.getElementById("yellow").classList.remove("visible");
+				document.getElementById("left-blue").classList.remove("visible");
+				document.getElementById("right-red").classList.remove("visible");
+				
+				document.getElementById("green").classList.add("visible");
+				document.getElementById("left-red").classList.add("visible");
+				document.getElementById("right-blue").classList.add("visible");
+				
+				document.getElementById("red").classList.remove("visible");
+				document.getElementById("left-yellow").classList.remove("visible");
+				document.getElementById("right-green").classList.remove("visible");
+				// Left
+				if (event.gamma < -67.5) {
+					currentColour = "red";
+				}
+				// Right
+				if (event.gamma > -22.5 && event.gamma < 22.5) {
+					currentColour = "blue";
+				}
+			}
+		
+			if (currentColour === "red") {
+				document.getElementById("blue").classList.remove("visible");
+				document.getElementById("left-green").classList.remove("visible");
+				document.getElementById("right-yellow").classList.remove("visible");
+				
+				document.getElementById("yellow").classList.remove("visible");
+				document.getElementById("left-blue").classList.remove("visible");
+				document.getElementById("right-red").classList.remove("visible");
+				
+				document.getElementById("green").classList.remove("visible");
+				document.getElementById("left-red").classList.remove("visible");
+				document.getElementById("right-blue").classList.remove("visible");
+				
+				document.getElementById("red").classList.add("visible");
+				document.getElementById("left-yellow").classList.add("visible");
+				document.getElementById("right-green").classList.add("visible");
+				// Left
+					if (event.gamma < 67.5 && event.gamma > 22.5) {
+					currentColour = "yellow";
+				}
+				// Right
+					if (event.gamma > -67.5 && event.gamma < -22.5) {
+					currentColour = "green";
+				}
+			}
+		}
+		
+		
+	
+		// Browser check, courtesy of https://www.sitepoint.com/using-device-orientation-html5/
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener("deviceorientation", deviceOrientationListener);
+		} else {
+			alert("Sorry, your browser doesn't support Device Orientation");
+		}
+
+	</script>
+	</body>
+</html>
